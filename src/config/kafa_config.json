@@ -1,0 +1,32 @@
+{
+  "key" : "1111-1234-5678-9010",
+  "setup" : {
+    "connection" : {
+      "kafkaHost" : "kafka:9092",
+      "connectTimeout" : 1000,
+      "requestTimeout" : 4000,
+      "autoConnect" : true
+    },
+    "producers" :[{
+      "topics" : "rate-update",
+      "partition" : 1
+    }],
+    "consumers" :[{
+      "topics" : "rate-update",
+      "partition" : 1,
+      "consumer" : {
+        "autoCommit" : true
+      }
+    }],
+    "splunkConfig" : {
+      "token" : "02d0777c-39c3-4e40-ab8e-f60a3dc242a0",
+      "url" : "https://splunk:8088",
+      "metadata" :{
+        "source": "data-store-service",
+        "sourcetype": "kafka-event-consumer",
+        "index": "main",
+        "host": "splunk"
+      }
+    }
+  }
+}
