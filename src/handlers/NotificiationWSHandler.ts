@@ -4,7 +4,7 @@ import KafkaConsumerService from "ms-common-services/lib/services/KafkaConsumerS
 import KafkaTopic from "ms-common-services/lib/models/KafkaTopic";
 import LogService from "ms-common-services/lib/services/LogService";
 
-const rateTrendChangeTopic:KafkaTopic = new KafkaTopic("rate-update", 1);
+const rateTrendChangeTopic:KafkaTopic = new KafkaTopic("rate-trend-change", 1);
 
 export default class NotificiationWSHandler extends BaseWebSocketHandler{
     constructor() {

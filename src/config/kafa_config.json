@@ -19,7 +19,7 @@
       }
     }],
     "splunkConfig" : {
-      "token" : "02d0777c-39c3-4e40-ab8e-f60a3dc242a0",
+      "token" : "ba4bde7e-be27-4059-8aab-cfbca8135ed4",
       "url" : "https://splunk:8088",
       "metadata" :{
         "source": "data-store-service",
