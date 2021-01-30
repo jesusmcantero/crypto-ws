@@ -1,10 +1,10 @@
-import BaseWebSocketHandler from "../handlers/BaseWebSocketHandler";
-import NotificiationWSHandler from "../handlers/NotificiationWSHandler";
 import LogService from "ms-common-services/lib/services/LogService";
+
+import BaseWebSocketHandler from "../handlers/BaseWebSocketHandler";
+import KafkaConsumerWsHandler from "../handlers/KafkaConsumerWsHandler";
 
 export default class WebSocketService {
     private static serviceInstance:WebSocketService;
-    private wsByHandleer:Map<String, BaseWebSocketHandler>;
 
     public static getInstance():WebSocketService {
         if (!WebSocketService.serviceInstance) {
@@ -13,30 +13,16 @@ export default class WebSocketService {
         return WebSocketService.serviceInstance;
     }
 
-    private constructor() {
-        this.wsByHandleer = new Map<String, BaseWebSocketHandler>();
+    private constructor() { }
+
+    public initInstanceByHandlerType(handlerSetup:any):BaseWebSocketHandler {
+        return this.getNewHandlerInstanceByType(handlerSetup);
     }
 
-    public initInstanceByHandlerType(handlerType:string):BaseWebSocketHandler {
-        this.isWShandlerReady();
-        return this.getNewHandlerrInstanceByType(handlerType);
-    }
 
-    public getInstanceByHandlerTypee(handlerType:string):BaseWebSocketHandler {
-        this.isWShandlerReady();
-        return this.wsByHandleer.get(handlerType);
-    }
-
-    private isWShandlerReady() {
-        if (!this.wsByHandleer) {
-            throw new Error();
-        }
-    }
-    private getNewHandlerrInstanceByType(handlerType:string):BaseWebSocketHandler {
-        LogService.getInstance().log('getNewHandlerrInstanceByType.handlerType: ' + handlerType);
-        if (handlerType.toLocaleLowerCase() === NotificiationWSHandler.name.toLocaleLowerCase()){
-            LogService.getInstance().log('getNewHandlerrInstanceByType.handlerType.toLocaleLowerCase: ' + handlerType.toLocaleLowerCase());
-            return new NotificiationWSHandler();
+    private getNewHandlerInstanceByType(handlerSetup:any):BaseWebSocketHandler {
+        if (handlerSetup.handler.toLocaleLowerCase() === KafkaConsumerWsHandler.name.toLocaleLowerCase()){
+            return new KafkaConsumerWsHandler();
         }
         throw new Error();
     }
