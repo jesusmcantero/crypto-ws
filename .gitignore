@@ -117,4 +117,5 @@ dist
 .DS_STORE
 .idea
 build
+package-lock.json
 
