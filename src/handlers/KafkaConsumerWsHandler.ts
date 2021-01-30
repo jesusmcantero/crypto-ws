@@ -20,14 +20,12 @@ export default class KafkaConsumerWsHandler extends BaseWebSocketHandler {
     }
 
     protected initKafkaConsumer(){
-        KafkaConsumerService.createNewInstance(this.setup.kafka.connection.key, this.setup.kafka.connection.setup);
-        KafkaConsumerService.getInstanceByKey(this.setup.kafka.connection.key).addConsumer(this.setup.kafka.topic, this);
+        KafkaConsumerService.createNewInstance(this.setup.kafka.connection.key, this.setup.kafka.connection.setup).addConsumer(this.setup.kafka.topic, this);
     }
 
     onError(err: any): any { }
 
     onMessage(message: KafkaMessage): any {
-        LogService.getInstance().log('NotificiationWSHandler.onMessage: ' + JSON.stringify(message));
         this.ws.send(JSON.stringify(message));
     }
 }
