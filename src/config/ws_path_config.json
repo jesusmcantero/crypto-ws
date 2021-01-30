@@ -1,6 +1,0 @@
-[
-  {
-    "path" : "/notification",
-    "handler" : "NotificiationWSHandler"
-  }
-]
