@@ -118,4 +118,5 @@ dist
 .idea
 build
 package-lock.json
+depending_service.json
 
