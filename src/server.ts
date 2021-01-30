@@ -31,16 +31,16 @@ server.register(fastifyWebSocket, {
 const start = async () => {
     VaultService.createInstance(process.env.VAULT_SECRET_KEY, vaultConfig).readSecret(process.env.VAULT_SECRET_PATH_KAFKA).then((kafkaSecretValue:any) => {
         kafkaConfig = JSON.parse(kafkaSecretValue.__data.kafka);
-        VaultService.getInstanceByKey(process.env.VAULT_SECRET_KEY).readSecret(process.env.VAULT_SECRET_PATH_WS_SETUP_PATH).then((wsSetupData: any) => {
+        VaultService.getInstanceByKey(process.env.VAULT_SECRET_KEY).readSecret(process.env.VAULT_SECRET_PATH_WS_SETUP_PATH).then( async (wsSetupData: any) => {
             wsSetup = JSON.parse(wsSetupData.__data.paths);
             LogService.getInstance().log('wsSetup: ' + JSON.stringify(wsSetup));
-            wsSetup?.map( async setup => {
+            wsSetup?.map(setup => {
                 setup.kafka.connection = kafkaConfig;
                 LogService.getInstance().log('setup: ' + JSON.stringify(setup));
                 new WSRouteHandler(server, setup);
-                await server.listen(8999, "0.0.0.0");
-                server.blipp();
-            })
+            });
+            await server.listen(8999, "0.0.0.0");
+            server.blipp();
         })
     })
 };
